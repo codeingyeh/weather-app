@@ -1,6 +1,13 @@
 import HourItemGroup from "./HourItem";
 import "./HourSummary.css";
 
+function isTimeInRange(target, start, end) {
+  const targetDate = new Date(target);
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+  return targetDate >= startDate && targetDate < endDate;
+}
+
 function combineWeatherData(data) {
   // 取得當前時間
   const now = new Date();
@@ -33,13 +40,11 @@ function combineWeatherData(data) {
           const start = new Date(startTime);
           const end = new Date(endTime);
           // 只比較小時，且保留該時段內的資料
-          return tempTime >= start && tempTime < end && tempHour >= currentHour;
+          return tempTime >= start && tempTime < end;
         })
         .map((temp) => ({
           dataTime: temp.DataTime.replace("+08:00", ""),
           temperature: temp.ElementValue[0].Temperature,
-          weather: weatherPeriod.ElementValue[0].Weather,
-          weatherCode: weatherPeriod.ElementValue[0].WeatherCode,
         }));
 
       // 如果該時段有任何資料則返回，否則跳過
@@ -49,6 +54,8 @@ function combineWeatherData(data) {
           endTime: endTime,
           probabilityOfPrecipitation:
             precipRecords[index].ElementValue[0].ProbabilityOfPrecipitation,
+          weather: weatherPeriod.ElementValue[0].Weather,
+          weatherCode: weatherPeriod.ElementValue[0].WeatherCode,
           perHour: perHourData,
         };
       }
@@ -66,7 +73,7 @@ export default function HourSummary({ hourData }) {
   }
   console.log(data);
   return (
-    <div className="flex-row">
+    <div className="flex-row" style={{ gap: "1rem" }}>
       {data.map((i) => (
         <HourItemGroup data={i} key={i.startTime} />
       ))}

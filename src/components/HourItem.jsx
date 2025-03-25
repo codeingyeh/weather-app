@@ -1,4 +1,6 @@
 import day from "../images/static/day.svg";
+import "./HourSummary.css";
+
 //將時間轉換成中文12小時制
 function formatTime(dateString) {
   const date = new Date(dateString);
@@ -9,24 +11,25 @@ function formatTime(dateString) {
 export default function HourItemGroup({ data }) {
   console.log(data);
   return (
-    <div>
-      <div>
+    <div className="flex-col">
+      <div className="flex-row">
         {data.perHour.map((hour) => (
           <Hour data={hour} key={hour.dataTime} />
         ))}
       </div>
-      <div>{data.probabilityOfPrecipitation}</div>
+      <div>
+        <img src={day} />
+      </div>
+      <div>{data.probabilityOfPrecipitation}°</div>
     </div>
   );
 }
 
 function Hour({ data }) {
   return (
-    <div>
+    <div className="flex-col">
       <p>{formatTime(data.dataTime)}</p>
-      <p>
-        <img src={day} />
-      </p>
+
       <p>{data.temperature}°</p>
     </div>
   );

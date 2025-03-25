@@ -56,12 +56,12 @@ export default function Waether() {
     data: hourData,
     loading: hourLoading,
     error: hourError,
-  } = useFetch(urlByHourly);
+  } = useFetch(`http://localhost:3000/day`);
   const {
     data: weekData,
     loading: weekLoading,
     error: weekError,
-  } = useFetch(urlByWeekly);
+  } = useFetch(`http://localhost:3000/week`);
 
   return (
     <div>
