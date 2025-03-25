@@ -1,3 +1,6 @@
+import HourItemGroup from "./HourItem";
+import "./HourSummary.css";
+
 function combineWeatherData(data) {
   // 取得當前時間
   const now = new Date();
@@ -56,4 +59,17 @@ function combineWeatherData(data) {
   return result;
 }
 
-export default function HourlyWeatherSummary() {}
+export default function HourSummary({ hourData }) {
+  let data = [];
+  if (hourData) {
+    data = combineWeatherData(hourData);
+  }
+  console.log(data);
+  return (
+    <div className="flex-row">
+      {data.map((i) => (
+        <HourItemGroup data={i} key={i.startTime} />
+      ))}
+    </div>
+  );
+}
