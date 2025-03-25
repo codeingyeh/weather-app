@@ -27,7 +27,7 @@ function getDateTime(hourOffset = 0) {
   utcPlus8.setUTCSeconds(0);
   utcPlus8.setUTCMilliseconds(0);
   // 回傳 yyyy-MM-ddThh:mm:ss 格式（基於 UTC+8）
-  return utcPlus8.toISOString().replace(/\.\d+Z$/, ":00");
+  return utcPlus8.toISOString().replace(/\.\d+Z$/, "");
 }
 
 const apiKey = "CWA-D426CA1B-AA24-4C08-8231-1F6BB619F637";
