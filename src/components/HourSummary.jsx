@@ -16,15 +16,30 @@ function combineWeatherData(data) {
   // 從 WeatherElement 中找到需要的資料
   const tempRecords = data.records.Locations[0].Location[0].WeatherElement.find(
     (element) => element.ElementName === "溫度"
-  ).Time;
+  ).Time.filter((data) => {
+    const end = new Date(data.DataTime);
+    const now = new Date();
+
+    if (now <= end) return data;
+  });
   const precipRecords =
     data.records.Locations[0].Location[0].WeatherElement.find(
       (element) => element.ElementName === "3小時降雨機率"
-    ).Time;
+    ).Time.filter((data) => {
+      const end = new Date(data.EndTime);
+      const now = new Date();
+
+      if (now < end) return data;
+    });
   const weatherRecords =
     data.records.Locations[0].Location[0].WeatherElement.find(
       (element) => element.ElementName === "天氣現象"
-    ).Time;
+    ).Time.filter((data) => {
+      const end = new Date(data.EndTime);
+      const now = new Date();
+
+      if (now < end) return data;
+    });
 
   // 以 3 小時為單位建立結果陣列
   const result = weatherRecords

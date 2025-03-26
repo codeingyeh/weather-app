@@ -49,19 +49,20 @@ export default function Waether() {
   const urlParams = `?Authorization=${apiKey}&format=JSON&LocationName=${distName}&ElementName=&timeTo=${getDateTime(
     24
   )}`;
+  const weekUrlParams = `?Authorization=${apiKey}&format=JSON&LocationName=${distName}`;
   const urlByHourly = rootUrl + apiRouteByHourly + urlParams;
-  const urlByWeekly = rootUrl + apiRouteByWeekly + urlParams;
+  const urlByWeekly = rootUrl + apiRouteByWeekly + weekUrlParams;
 
   const {
     data: hourData,
     loading: hourLoading,
     error: hourError,
-  } = useFetch(`http://localhost:3000/day`);
+  } = useFetch(urlByHourly);
   const {
     data: weekData,
     loading: weekLoading,
     error: weekError,
-  } = useFetch(`http://localhost:3000/week`);
+  } = useFetch(urlByWeekly);
 
   return (
     <div>

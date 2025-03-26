@@ -1,5 +1,25 @@
 import WeekItem from "./WeekItem";
 
+//二次處理
+function groupByDate(data) {
+  const tempObj = {};
+
+  // 先將數據按日期分組到臨時物件中
+  data.forEach((item) => {
+    const date = item.startTime.split("T")[0];
+    if (!tempObj[date]) {
+      tempObj[date] = [];
+    }
+    tempObj[date].push(item);
+  });
+
+  // 直接返回陣列格式
+  return Object.keys(tempObj).map((date) => ({
+    date,
+    periods: tempObj[date],
+  }));
+}
+//一次處理
 function combineWeatherData(data) {
   // 取得當前時間
   const now = new Date();
@@ -48,7 +68,7 @@ function combineWeatherData(data) {
     })
     .filter((item) => item !== null); // 移除所有 null 值
 
-  return result;
+  return groupByDate(result);
 }
 
 export default function WeekSummary({ weekData }) {
