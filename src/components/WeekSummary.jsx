@@ -6,7 +6,11 @@ function groupByDate(data) {
 
   // 先將數據按日期分組到臨時物件中
   data.forEach((item) => {
-    const date = item.startTime.split("T")[0];
+    let date = item.startTime.split("T")[0];
+    const time = item.startTime.split("T")[1];
+    if (time === "00:00:00") {
+      return;
+    }
     if (!tempObj[date]) {
       tempObj[date] = [];
     }
@@ -78,10 +82,10 @@ export default function WeekSummary({ weekData }) {
   }
   console.log(data);
   return (
-    <div className="flex-row" style={{ gap: "1rem" }}>
+    <ul className="flex-col" style={{ gap: "1rem" }}>
       {data.map((i) => (
-        <WeekItem data={i} key={i.startTime} />
+        <WeekItem data={i} key={i.date} />
       ))}
-    </div>
+    </ul>
   );
 }
