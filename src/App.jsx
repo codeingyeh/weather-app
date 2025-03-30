@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Waether from "./pages/weather";
 import Home from "./pages/home";
+import District from "./pages/District";
 
 function App() {
   return (
@@ -9,7 +9,7 @@ function App() {
       <div>
         <Routes>
           <Route index element={<Home />} />
-          <Route path="dist/:distName" element={<Waether />} />
+          <Route path="district/" element={<District />} />
         </Routes>
       </div>
     </BrowserRouter>
