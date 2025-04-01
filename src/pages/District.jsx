@@ -6,7 +6,7 @@ import ForecastFor24Hours from "../components/ForcastFor24Hours";
 import ForecastForWeek from "../components/ForcastForWeek";
 import Search from "../components/Search";
 
-export default function District() {
+export default function District({ subscriptDist, onSubscriptAdd }) {
   // const { distName } = useParams();
   const [distName, setDistName] = useState("中正區");
   const {
@@ -26,10 +26,12 @@ export default function District() {
   // if (errorFor3Days || errorFor7Days) return <p>Error</p>;
   const nowDataBy3Days = dataFor3Days?.data[0];
   const nowDataBy7Days = dataFor7Days?.data[0][current][0];
+  const isSubscript = subscriptDist.some((el) => el.distName === distName);
 
   return (
     <div>
       <Search onDistChange={setDistName} />
+      {!isSubscript && <button onClick={() => onSubscriptAdd()}>加入</button>}
       <header>
         <h1>{dataFor3Days?.LocationName}</h1>
 
